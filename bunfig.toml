@@ -1,0 +1,2 @@
+entrypoints = ["src/index.ts"]
+outDir = "dist"
