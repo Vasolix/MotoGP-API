@@ -87,7 +87,6 @@ export class MotoGPClient {
     }
 
     try {
-      console.log(`Making request to: ${url.toString()}`);
       const response = await request(url.toString(), {
         method: 'GET',
         headers: {
