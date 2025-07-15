@@ -1,6 +1,6 @@
 {
   "name": "motogp-api",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Vasolix",
   "license": "MIT",
   "description": "A TypeScript API wrapper for MotoGP data",
