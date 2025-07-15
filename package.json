@@ -41,5 +41,9 @@
     "node",
     "motorsport",
     "racing"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vasolix/MotoGP-API.git"
+  }
 }

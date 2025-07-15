@@ -2,7 +2,7 @@
 # MotoGP API
 
 [![npm version](https://img.shields.io/npm/v/motogp-api)](https://www.npmjs.com/package/motogp-api)
-
+[GitHub](https://github.com/Vasolix/MotoGP-API)
 A simple and efficient TypeScript wrapper for the official MotoGP API.
 
 ## Installation
