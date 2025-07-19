@@ -79,7 +79,7 @@ describe('MotoGPClient', () => {
     test('should fetch classification for a session', async () => {
       try {
         // Try to get a recent session classification
-        const classification = await client.getClassification('e8c110ad-64aa-4e8e-8a86-f2f152f6a942', 2024);
+        const classification = await client.getClassification('e8c110ad-64aa-4e8e-8a86-f2f152f6a942', 'SeasonUUID');
         expect(classification).toHaveProperty('classification');
         expect(Array.isArray(classification.classification)).toBe(true);
       } catch (error) {
@@ -101,8 +101,7 @@ describe('MotoGPClient', () => {
   describe('Broadcast API', () => {
     test('should fetch categories for current year', async () => {
       try {
-        const currentYear = new Date().getFullYear();
-        const categories = await client.getCategories(currentYear);
+        const categories = await client.getCategories('SeasonUUID');
         expect(Array.isArray(categories)).toBe(true);
         if (categories.length > 0) {
           expect(categories[0]).toHaveProperty('id');
@@ -131,7 +130,7 @@ describe('MotoGPClient', () => {
 
     test('should fetch teams', async () => {
       try {
-        const teams = await client.getTeams(CATEGORY_IDS.MOTOGP, getCurrentYear());
+        const teams = await client.getTeams(CATEGORY_IDS.MOTOGP, 'SeasonUUID');
         expect(Array.isArray(teams)).toBe(true);
         if (teams.length > 0) {
           expect(teams[0]).toHaveProperty('id');
@@ -146,8 +145,7 @@ describe('MotoGPClient', () => {
 
     test('should fetch events', async () => {
       try {
-        const currentYear = getCurrentYear();
-        const events = await client.getBroadcastEvents(currentYear);
+        const events = await client.getBroadcastEvents('SeasonUUID');
         expect(Array.isArray(events)).toBe(true);
         if (events.length > 0) {
           expect(events[0]).toHaveProperty('id');

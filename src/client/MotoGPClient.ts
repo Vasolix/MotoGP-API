@@ -232,14 +232,14 @@ export class MotoGPClient {
    * Retrieves the classification (results) for a specific session
    * 
    * @param sessionId - The unique identifier of the session
-   * @param seasonYear - Optional season year for disambiguation (e.g., 2024)
+   * @param seasonYear - Optional season year for disambiguation (e.g., "UUID")
    * @param isTest - Optional flag indicating if this is a test session
    * @returns Promise that resolves to the classification data
    * @throws {APIError} When the session is not found or request fails
    * 
    * @example
    * ```typescript
-   * const classification = await client.getClassification('session-id', 2024);
+   * const classification = await client.getClassification('session-id', 'SeasonUUID');
    * classification.classification.forEach((entry, index) => {
    *   console.log(`${index + 1}. ${entry.rider.name} ${entry.rider.surname} - ${entry.points} points`);
    * });
@@ -247,7 +247,7 @@ export class MotoGPClient {
    */
   async getClassification(
     sessionId: string, 
-    seasonYear?: number, 
+    seasonYear?: string, 
     isTest?: boolean
   ): Promise<ClassificationResponse> {
     const params: Record<string, string | number | boolean> = {};
@@ -359,36 +359,36 @@ export class MotoGPClient {
   /**
    * Retrieves all categories for a specific season
    * 
-   * @param seasonYear - The season year (e.g., 2024, 2025)
+   * @param seasonYear - The season year e.g. "SeasonUUID"
    * @returns Promise that resolves to an array of category objects (MotoGP, Moto2, Moto3, MotoE)
    * @throws {APIError} When the season year is invalid or request fails
    * 
    * @example
    * ```typescript
-   * const categories = await client.getCategories(2024);
+   * const categories = await client.getCategories("SeasonUUID");
    * const motoGP = categories.find(c => c.name === 'MotoGP');
    * console.log('MotoGP category ID:', motoGP?.id);
    * ```
    */
-  async getCategories(seasonYear: number): Promise<Category[]> {
+  async getCategories(seasonYear: string): Promise<Category[]> {
     return this.makeRequest<Category[]>('categories', { seasonYear });
   }
 
   /**
    * Retrieves broadcast events for a specific season
    * 
-   * @param seasonYear - The season year (e.g., 2024, 2025)
+   * @param seasonYear - The season year (e.g., "SeasonUUID")
    * @returns Promise that resolves to an array of broadcast event objects
    * @throws {APIError} When the season year is invalid or request fails
    * 
    * @example
    * ```typescript
-   * const events = await client.getBroadcastEvents(2024);
+   * const events = await client.getBroadcastEvents("SeasonUUID");
    * const upcomingEvents = events.filter(e => new Date(e.date_start) > new Date());
    * console.log(`${upcomingEvents.length} upcoming events`);
    * ```
    */
-  async getBroadcastEvents(seasonYear: number): Promise<BroadcastEvent[]> {
+  async getBroadcastEvents(seasonYear: string): Promise<BroadcastEvent[]> {
     return this.makeRequest<BroadcastEvent[]>('events', { seasonYear });
   }
 
@@ -494,14 +494,14 @@ export class MotoGPClient {
    * endpoint only returns riders from the current season.
    * 
    * @param categoryUuid - The unique identifier of the category (use CATEGORY_IDS constants)
-   * @param seasonYear - The season year (e.g., 2024, 2025)
+   * @param seasonYear - The season year (e.g., "SeasonUUID")
    * @returns Promise that resolves to an array of team objects with their riders
    * @throws {APIError} When the category/season is not found or request fails
    * 
    * @example
    * ```typescript
    * import { CATEGORY_IDS } from 'motogp-api';
-   * const teams = await client.getTeams(CATEGORY_IDS.MOTOGP, 2024);
+   * const teams = await client.getTeams(CATEGORY_IDS.MOTOGP, "SeasonUUID");
    * teams.forEach(team => {
    *   console.log(`${team.name} (${team.constructor.name})`);
    *   team.riders.forEach(rider => {
@@ -510,7 +510,7 @@ export class MotoGPClient {
    * });
    * ```
    */
-  async getTeams(categoryUuid: string, seasonYear: number): Promise<BroadcastTeam[]> {
+  async getTeams(categoryUuid: string, seasonYear: string): Promise<BroadcastTeam[]> {
     return this.makeRequest<BroadcastTeam[]>('teams', { categoryUuid, seasonYear });
   }
 }
