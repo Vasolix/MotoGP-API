@@ -159,6 +159,24 @@ export class MotoGPClient {
     return this.makeRequest<Season[]>('results/seasons');
   }
 
+    /**
+   * Retrieves all categories for a specific season
+   * 
+   * @param seasonYear - The season year e.g. "SeasonUUID"
+   * @returns Promise that resolves to an array of category objects (MotoGP, Moto2, Moto3, MotoE)
+   * @throws {APIError} When the season year is invalid or request fails
+   * 
+   * @example
+   * ```typescript
+   * const categories = await client.getCategories("SeasonUUID");
+   * const motoGP = categories.find(c => c.name === 'MotoGP');
+   * console.log('MotoGP category ID:', motoGP?.id);
+   * ```
+   */
+  async getCategories(seasonUuid: string): Promise<Category[]> {
+    return this.makeRequest<Category[]>('results/categories', { seasonUuid });
+  }
+
   /**
    * Retrieves events for a specific season
    * 
@@ -370,8 +388,8 @@ export class MotoGPClient {
    * console.log('MotoGP category ID:', motoGP?.id);
    * ```
    */
-  async getCategories(seasonYear: string): Promise<Category[]> {
-    return this.makeRequest<Category[]>('categories', { seasonYear });
+  async getBroadcastCategories(seasonUuid: string): Promise<Category[]> {
+    return this.makeRequest<Category[]>('categories', { seasonUuid });
   }
 
   /**
